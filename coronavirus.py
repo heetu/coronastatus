@@ -2,7 +2,27 @@ from selenium import webdriver
 from time import sleep
 import re
 from datetime import datetime
-import smtplib
+# import smtplib
+
+import xlwt
+from xlwt import Workbook
+
+wb = Workbook()
+
+sheet1 = wb.add_sheet('Sheet 1')
+# row = 1
+# column  = 1
+sheet1.write(0, 0, 'Country')
+sheet1.write(0, 1, 'Total cases')
+sheet1.write(0, 2, 'New cases')
+sheet1.write(0, 3, 'Total deaths')
+sheet1.write(0, 4, 'New deaths')
+sheet1.write(0, 5, 'Active cases')
+sheet1.write(0, 6, 'Total recovered')
+sheet1.write(0, 7, 'Serious, critical cases')
+
+row = 1
+column = 0
 
 
 class Coronavirus():
@@ -42,6 +62,17 @@ class Coronavirus():
         print("Active cases: " + active_cases)
         print("Total recovered: " + total_recovered)
         print("Serious, critical cases: " + serious_critical)
+
+        data_list = [country_element.text, total_cases, new_cases, total_deaths,
+                     new_deaths, active_cases, total_recovered, serious_critical]
+        print(len(data_list))
+        for i in range(len(data_list)):
+            sheet1.write(row, i, data_list[i])
+            pass
+
+        row += 1
+
+        wb.save('xlwt example.xls')
 
         # send_mail(country_element.text, total_cases, new_cases, total_deaths, new_deaths, active_cases, total_recovered, serious_critical)
 
